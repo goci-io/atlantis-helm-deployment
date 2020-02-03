@@ -32,11 +32,9 @@ module "atlantis" {
 
 This is the default workflow for Terraform with an [AWS S3 backend](https://www.terraform.io/docs/backends/types/s3.html) and default AWS region set.
 You will need to list your projects/modules within a seperate `atlantis.yaml` file in your repository. 
-Additionally all projects/modules need their own `Makefile` with an `init` and `clean` command.
 
 Example:
 
-1. `atlantis.yaml` file within your repository:
 ```yaml
 version: 3
 projects:
@@ -53,15 +51,6 @@ projects:
     when_modified: ["modules/cloudtrail/*.tf", "*.tf*"]
     enabled: true
 ...
-```
-
-2. `Makefile` with init and clean targets
-```
-init:
-    terraform init -backend-config=key=my-module/terraform.tfstate
-
-clean:
-    rm -rf .terraform *.tfstate*
 ```
 
 For the AWS workflow the following environment variables are required:  
