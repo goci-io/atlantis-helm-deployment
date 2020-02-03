@@ -53,6 +53,8 @@ projects:
 ...
 ```
 
+The project name will be used to generate the S3 key for the state file. It follows the convention of `${PROJECT_NAME}/terraform.tfstate`
+
 For the AWS workflow the following environment variables are required:  
 - `AWS_DEFAULT_REGION`  
 - `TF_BUCKET`  
