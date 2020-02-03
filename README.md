@@ -43,7 +43,12 @@ projects:
 - dir: modules/cloudtrail
   name: cloudtrail
   workspace: staging
-  workflow: default
+  autoplan:
+    when_modified: ["modules/cloudtrail/*.tf", "*.tf*"]
+    enabled: true
+- dir: modules/cloudtrail
+  name: cloudtrail
+  workspace: prod
   autoplan:
     when_modified: ["modules/cloudtrail/*.tf", "*.tf*"]
     enabled: true
