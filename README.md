@@ -1,7 +1,8 @@
 # atlantis-helm-deployment
 
 This module deploys [Atlantis](https://www.runatlantis.io/) as helm release and provides a server side workflow definition.
-We extend the [runatlantis/atlantis](https://hub.docker.com/r/runatlantis/atlantis/) image by adding `make` and `tfenv`. 
+We extend the [runatlantis/atlantis](https://hub.docker.com/r/runatlantis/atlantis/) image by adding `make` and [`tfenv`](https://github.com/cloudposse/tfenv). 
+By adding `tfenv` into the process you can access all environment variables as terraform variables.
 
 ### Usage
 ```hcl
@@ -46,6 +47,7 @@ projects:
   autoplan:
     when_modified: ["modules/cloudtrail/*.tf", "*.tf*"]
     enabled: true
+...
 ```
 
 2. `Makefile` with init and clean targets
