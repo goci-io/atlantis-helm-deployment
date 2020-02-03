@@ -17,6 +17,6 @@ workflows:
           name: TF_CLI_ARGS_init
           command: 'echo "-backend-config=bucket=$${TF_BUCKET} -backend-config=encrypt=true -backend-config=region=$${AWS_DEFAULT_REGION} -no-color"'
       %{ endif ~}
-      - run: rm -rf .terraform *.tfstate
-      - run: terraform init
+      - run: make clean
+      - run: make init
       - plan
