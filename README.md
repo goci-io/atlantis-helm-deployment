@@ -71,4 +71,29 @@ For the AWS workflow the following environment variables are required:
 
 ### Configuration
 
+| Name | Description | Default |
+|-----------------|----------------------------------------|---------|
+| namespace | Company or organization prefix | - |
+| stage | The stage the release is for | - |
+| region | A custom region name to deploy the release into | - |
+| name | The name of the helm release | `"atlantis"` |
+| organization | Hosting organization (owner of the repositories) | - |
+| repositories | List of repositories within the organization allowed to send webhooks to atlantis | `["*"]` |
+| cluster_fqdn | Full qualified domain name to the root domain of the cluster | - |
+| vc_host | Base url to the version control platform | `github.com` |
+| vc_type | Type of the version control platform (valid values are `bitbucket`, `gitlab` and `github`) | `github` |
+| environment_variables | Map of additional environment variables to attach to the atlantis pod | `{}` |
+| k8s_namespace | The kubernetes namespace to deploy the helm release into | `"provisioning"` |
+| pod_annotations | Additional map of annotations to add to the pod template | `{}` |
+| helm_release_version | Version of helm chart to use for the deployment | `"3.10.1"` |
+| apply_requirements | Requirements any pull request needs to fulfil before planning terraform diff | `["mergeable", "approved"]` |
+| encrypted_user | Encrypted or plain username for the version control to use | `""` |
+| encrypted_token | Encrypted or plain token for the version control to use | `""` |
+| encrypted_secret | Encrypted or plain webhook secret to use | `""` |
+| aws_region | AWS region atlantis will run it | - |
+| lambda_encryption_function | Lambda function name used to decrypt secrets. You can use this [module](https://github.com/goci-io/aws-lambda-kms-encryption) for example | `""`|
+| ssm_parameter_user | SSM Parameter name identifying the version control user | `""` |
+| ssm_parameter_token | SSM Parameter name identifying the version control token | `""` |
+| ssm_parameter_secret | SSM Parameter name identifying the webhook secret | `""` |
 
+Either `encrypted_` variable values need to specify an encrypted string, used to decrypt during plan and apply or you will need to provide AWS SSM parameter names to specify the secrets. As a last rescue you can specify plain secrets in the `encrypted_` variables (which is not suggested). 
