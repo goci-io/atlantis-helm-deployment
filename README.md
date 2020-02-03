@@ -12,6 +12,9 @@ Once a new release is created with a tag following the convention of `<major>.<m
 [![](https://images.microbadger.com/badges/version/gocidocker/atlantis.svg)](https://microbadger.com/images/gocidocker/atlantis "Get your own version badge on microbadger.com")
 
 ### Usage
+
+For the latest version you can check the [releases](https://github.com/goci-io/atlantis-helm-deployment/releases) page. Use releases without the `-atlantis` suffix.
+
 ```hcl
 module "atlantis" {
   source        = "git::https://github.com/goci-io/atlantis-helm-deployment.git?ref=tags/<latest-version>"
