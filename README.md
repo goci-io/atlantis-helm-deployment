@@ -1,5 +1,9 @@
 # atlantis-helm-deployment
 
+[![](https://images.microbadger.com/badges/version/gocidocker/atlantis.svg)](https://microbadger.com/images/gocidocker/atlantis "Get your own version badge on microbadger.com")
+
+**Maintained by [@goci-io/prp-terraform](https://github.com/orgs/goci-io/teams/prp-terraform)**
+
 This module deploys [Atlantis](https://www.runatlantis.io/) as helm release and provides a server side workflow definition.
 We extend the [runatlantis/atlantis](https://hub.docker.com/r/runatlantis/atlantis/) image by adding [`tfenv`](https://github.com/cloudposse/tfenv). 
 By adding `tfenv` into the process you can access all environment variables as terraform variables.
