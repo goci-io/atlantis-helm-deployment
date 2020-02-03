@@ -51,7 +51,7 @@ resource "helm_release" "atlantis" {
   }
 
   dynamic "set" {
-    for_each = var.environment_variables
+    for_each = local.environment_variables
 
     content {
       name  = format("environment.%s", upper(set.key))

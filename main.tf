@@ -15,4 +15,10 @@ locals {
     region             = var.region
     apply_requirements = join(",", var.apply_requirements)
   })
+
+  environment_variables = merge({
+    namespace = var.namespace
+    stage     = var.stage
+    region    = var.region
+  }, var.environment_variables)
 }
