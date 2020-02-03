@@ -1,7 +1,7 @@
 # atlantis-helm-deployment
 
 This module deploys [Atlantis](https://www.runatlantis.io/) as helm release and provides a server side workflow definition.
-We extend the [runatlantis/atlantis](https://hub.docker.com/r/runatlantis/atlantis/) image by adding `make` and [`tfenv`](https://github.com/cloudposse/tfenv). 
+We extend the [runatlantis/atlantis](https://hub.docker.com/r/runatlantis/atlantis/) image by adding [`tfenv`](https://github.com/cloudposse/tfenv). 
 By adding `tfenv` into the process you can access all environment variables as terraform variables.
 
 The docker image is pushed to [gocidocker](https://hub.docker.com/u/gocidocker) on docker using [hub.docker.com]'s autobuild configuration.
