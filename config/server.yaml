@@ -1,0 +1,22 @@
+repos:
+%{ for repo in repos ~}
+- id: ${vc_host}/${organization}/${repo}
+  apply_requirements: [${apply_requirements}]
+  allowed_overrides: [workflow]
+  allow_custom_workflows: false
+  workflow: default
+%{ endfor ~}
+
+workflows:
+  default:
+    plan:
+      steps:
+      - run: eval $(tfenv)
+      %{ if provider == "aws" ~}
+      - env:
+          name: TF_CLI_ARGS_init
+          command: 'echo "-backend-config=bucket=$${TF_BUCKET} -backend-config=encrypt=true -backend-config=region=$${AWS_DEFAULT_REGION} -no-color"'
+      %{ endif ~}
+      - run: rm -rf .terraform *.tfstate
+      - run: terraform init
+      - plan
