@@ -14,6 +14,5 @@ locals {
     stage              = var.stage
     region             = var.region
     apply_requirements = join(",", var.apply_requirements)
-    provider           = "aws"
   })
 }

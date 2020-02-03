@@ -4,19 +4,17 @@ repos:
   apply_requirements: [${apply_requirements}]
   allowed_overrides: [workflow]
   allow_custom_workflows: false
-  workflow: default
+  workflow: default-aws
 %{ endfor ~}
 
 workflows:
-  default:
+  default-aws:
     plan:
       steps:
       - run: eval $(tfenv)
-      %{ if provider == "aws" ~}
       - env:
           name: TF_CLI_ARGS_init
           command: 'echo "-backend-config=bucket=$${TF_BUCKET} -backend-config=encrypt=true -backend-config=region=$${AWS_DEFAULT_REGION} -no-color"'
-      %{ endif ~}
       - run: make clean
       - run: make init
       - plan
