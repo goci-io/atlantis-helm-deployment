@@ -1,7 +1,5 @@
 # atlantis-helm-deployment
 
-[![](https://images.microbadger.com/badges/version/gocidocker/atlantis.svg)](https://microbadger.com/images/gocidocker/atlantis "Get your own version badge on microbadger.com")
-
 **Maintained by [@goci-io/prp-terraform](https://github.com/orgs/goci-io/teams/prp-terraform)**
 
 This module deploys [Atlantis](https://www.runatlantis.io/) as helm release and provides a server side workflow definition.
@@ -11,7 +9,7 @@ By adding `tfenv` into the process you can access all environment variables as t
 The docker image is pushed to [gocidocker](https://hub.docker.com/u/gocidocker) on docker using [hub.docker.com]'s autobuild configuration.
 Once a new release is created with a tag following the convention of `<major>.<minor>[.<patch>]-atlantis` the docker image build will be triggered
 
-You can view the latest docker release [here](https://hub.docker.com/r/gocidocker/atlantis/tags)
+[![](https://images.microbadger.com/badges/version/gocidocker/atlantis.svg)](https://microbadger.com/images/gocidocker/atlantis "Get your own version badge on microbadger.com")
 
 ### Usage
 ```hcl
