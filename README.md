@@ -65,6 +65,8 @@ projects:
 
 The project name will be used to generate the S3 key for the state file. It follows the convention of `${PROJECT_NAME}/terraform.tfstate`
 
+To setup a full github repository with atlantis (eg. if you provision initial build infrastructure seperatly) you can use our [github-repository](https://github.com/goci-io/github-repository) module.
+
 For the AWS workflow the following environment variables are required:  
 - `AWS_DEFAULT_REGION`  
 - `TF_BUCKET`  
