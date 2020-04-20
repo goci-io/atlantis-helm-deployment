@@ -42,6 +42,12 @@ variable "name" {
   description = "Deployment name of the helm release"
 }
 
+variable "attributes" {
+  type        = list
+  default     = []
+  description = "Additional attributes (e.g. `eu1`)"
+}
+
 variable "pod_annotations" {
   type        = map(string)
   default     = {}

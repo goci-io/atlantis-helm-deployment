@@ -1,9 +1,18 @@
+locals {
+  release_name = length(var.attributes) > 0 ? format("%s-%s", join("-", var.attributes), var.name) : var.name
+}
+
+data "helm_repository" "stable" {
+  name = "stable"
+  url  = "https://kubernetes-charts.storage.googleapis.com"
+}
 
 resource "helm_release" "atlantis" {
-  name          = var.name
+  name          = local.release_name
   namespace     = var.k8s_namespace
   version       = var.helm_release_version
-  chart         = "stable/atlantis"
+  repository    = data.helm_repository.stable.metadata[0].name
+  chart         = "atlantis"
   recreate_pods = true
   wait          = true
 
