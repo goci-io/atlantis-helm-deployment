@@ -1,3 +1,8 @@
+variable "aws_assume_role_arn" {
+  type        = string
+  default     = ""
+  description = "IAM role to assume for the AWS provider" 
+}
 
 variable "organization" {
   type        = string
@@ -45,7 +50,7 @@ variable "pod_annotations" {
 
 variable "helm_release_version" {
   type        = string
-  default     = "3.10.1"
+  default     = "3.11.1"
   description = "Version of the helm release to deploy"
 }
 
