@@ -1,5 +1,5 @@
 locals {
-  release_name = length(var.attributes) > 0 ? format("%s-%s", join("-", var.attributes), var.name) : var.name
+  release_name = length(var.attributes) > 0 ? format("%s-%s", var.name, join("-", var.attributes)) : var.name
 }
 
 data "helm_repository" "stable" {
