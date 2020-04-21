@@ -2,7 +2,6 @@
 # requires you to have the CRDs of cert-manager installed on your cluster.
 # The helm release contains all necessary resource definitions:
 # https://github.com/goci-io/aws-cert-manager-helm
-
 %{ if deploy_selfsigning_issuer ~}
 apiVersion: cert-manager.io/v1alpha2
 kind: Issuer
@@ -11,7 +10,6 @@ metadata:
   namespace: ${k8s_namespace}
 spec:
   selfSigned: {}
-
 ---
 %{ endif ~}
 

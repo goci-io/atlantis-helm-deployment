@@ -1,7 +1,7 @@
 variable "aws_assume_role_arn" {
   type        = string
   default     = ""
-  description = "IAM role to assume for the AWS provider" 
+  description = "IAM role to assume for the AWS provider"
 }
 
 variable "organization" {
