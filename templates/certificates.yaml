@@ -22,7 +22,7 @@ metadata:
   namespace: ${k8s_namespace}
 spec:
   secretName: ${app_name}-tls
-  commonName: ${app_name}
+  commonName: ${atlantis_url}
   issuerRef:
 %{ if deploy_selfsigning_issuer ~}
     name: ${app_name}-ca
