@@ -18,7 +18,5 @@ locals {
 
   environment_variables = merge({
     namespace = var.namespace
-    stage     = var.stage
-    region    = var.region
   }, var.environment_variables)
 }
