@@ -1,6 +1,34 @@
 dataStorage: 8Gi
-defaultTFVersion: 0.12.20
+defaultTFVersion: 0.12.24
+orgWhitelist: ${organization}
+atlantisUrl: https://${var.name}.${var.cluster_fqdn}
 
 image:
   repository: gocidocker/atlantis
   tag: 0.1.0
+
+repoConfig: |
+  ---
+  repos:
+%{ for repo in repos ~}
+  - id: "${vc_host}/${organization}/${repo}"
+    apply_requirements: [${apply_requirements}]
+    allowed_overrides: [workflow]
+    allow_custom_workflows: false
+    workflow: default-aws
+%{ endfor ~}
+
+  workflows:
+    default-aws:
+      plan:
+        steps:
+        - run: "eval $(tfenv)"
+        - env:
+            name: TF_VAR_stage
+            command: 'echo $${WORKSPACE}'
+        - env:
+            name: TF_CLI_ARGS_init
+            command: 'echo "-backend-config=bucket=$${TF_BUCKET} -backend-config=encrypt=true -backend-config=region=$${AWS_DEFAULT_REGION} -no-color"'
+        - run: rm -rf *.terraform *.tfstate*
+        - run: terraform init -backend-config=key=$${PROJECT_NAME}/terraform.tfstate
+        - plan

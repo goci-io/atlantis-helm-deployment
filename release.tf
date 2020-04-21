@@ -17,24 +17,19 @@ resource "helm_release" "atlantis" {
   wait          = true
 
   values = [
-    file("${path.module}/defaults.yaml"),
+    templatefile("${path.module}/defaults.yaml", {
+      repos              = var.repositories
+      organization       = var.organization
+      vc_host            = var.vc_host
+      namespace          = var.namespace
+      name               = var.name
+      stage              = var.stage
+      region             = var.region
+      cluster_fqdn       = var.cluster_fqdn
+      apply_requirements = join(",", var.apply_requirements)
+    }),
     file("${path.module}/values.yaml"),
   ]
-
-  set {
-    name  = "orgWhitelist"
-    value = var.organization
-  }
-
-  set {
-    name  = "atlantisUrl"
-    value = "https://${var.name}.${var.cluster_fqdn}"
-  }
-
-  set_string {
-    name  = "repoConfig"
-    value = local.repos_config
-  }
 
   set {
     name  = format("%s.%s", var.vc_type, local.host_attribute[var.vc_type])
