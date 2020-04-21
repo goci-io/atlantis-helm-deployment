@@ -1,7 +1,3 @@
-locals {
-  release_name = length(var.attributes) > 0 ? format("%s-%s", var.name, join("-", var.attributes)) : var.name
-}
-
 data "helm_repository" "stable" {
   name = "stable"
   url  = "https://kubernetes-charts.storage.googleapis.com"
@@ -25,11 +21,12 @@ resource "helm_release" "atlantis" {
       name               = var.name
       stage              = var.stage
       region             = var.region
-      cluster_fqdn       = var.cluster_fqdn
+      tls_secret         = var.deploy_cert_manager_certificate ? format("%s-tls", local.release_name) : ""
+      atlantis_url       = local.atlantis_url
       pod_annotations    = var.pod_annotations
       apply_requirements = join(",", var.apply_requirements)
     }),
-    file("${path.module}/values.yaml"),
+    file("${var.helm_values_root}/values.yaml"),
   ]
 
   set {

@@ -1,7 +1,7 @@
 variable "aws_assume_role_arn" {
   type        = string
   default     = ""
-  description = "IAM role to assume for the AWS provider" 
+  description = "IAM role to assume for the AWS provider"
 }
 
 variable "organization" {
@@ -58,6 +58,12 @@ variable "helm_release_version" {
   type        = string
   default     = "3.11.1"
   description = "Version of the helm release to deploy"
+}
+
+variable "helm_values_root" {
+  type        = string
+  default     = "."
+  description = "Path to the directory containing values.yaml for helm to overwrite any defaults"
 }
 
 variable "aws_region" {
@@ -134,4 +140,28 @@ variable "environment_variables" {
   type        = map(string)
   default     = {}
   description = "Additional environment variables to add to the pod template"
+}
+
+variable "deploy_cert_manager_certificate" {
+  type        = bool
+  default     = false
+  description = "Deploys cert-manager certificate to use for HTTPS"
+}
+
+variable "cert_manager_issuer_name" {
+  type        = string
+  default     = ""
+  description = "Name of an cert-manager Issuer in the same kubernetes namespace or cluster wide (depends on issuer_type)"
+}
+
+variable "cert_manager_issuer_kind" {
+  type        = string
+  default     = "Issuer"
+  description = "Type of the Issuer specified in cert_manager_issuer_name. Either ClusterIssuer or Issuer"
+}
+
+variable "deploy_selfsigning_issuer" {
+  type        = bool
+  default     = false
+  description = "If there is no certificate issuer available we can deploy a selfsigning issuer to issue certificates"
 }

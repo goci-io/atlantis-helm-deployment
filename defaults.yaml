@@ -1,7 +1,7 @@
 dataStorage: 8Gi
 defaultTFVersion: 0.12.24
 orgWhitelist: ${organization}
-atlantisUrl: https://${name}.${cluster_fqdn}
+atlantisUrl: https://${atlantis_url}
 
 image:
   repository: gocidocker/atlantis
@@ -10,8 +10,12 @@ image:
 podTemplate:
   annotations:
 %{ for key, annotation in pod_annotations ~}
-    ${key}: ${annotation}
+    ${key}: "${annotation}"
 %{ endfor ~}
+
+%{ if tls_secret != "" ~}
+tlsSecretName: ${tls_secret}
+%{ endif ~}
 
 repoConfig: |
   ---
@@ -38,3 +42,12 @@ repoConfig: |
         - run: rm -rf *.terraform *.tfstate*
         - run: terraform init -backend-config=key=$${PROJECT_NAME}/terraform.tfstate
         - plan
+
+ingress:
+  host: ${atlantis_url}
+%{ if tls_secret != "" ~}
+  tls:
+  - hosts:
+    - ${atlantis_url}
+    secretName: ${tls_secret}
+%{ endif ~}
