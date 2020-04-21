@@ -6,7 +6,7 @@ locals {
     dns_names                 = [local.atlantis_url]
     app_name                  = local.release_name
     k8s_namespace             = var.k8s_namespace
-  });
+  })
 }
 
 resource "null_resource" "apply_certificate" {

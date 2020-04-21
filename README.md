@@ -91,8 +91,8 @@ For the AWS workflow the following environment variables are required:
 | helm_values_root | Path to the directory containing values.yaml for helm to overwrite any defaults | `.` |
 | apply_requirements | Requirements any pull request needs to fulfil before planning terraform diff | `["mergeable", "approved"]` |
 | deploy_cert_manager_certificate | Deploys cert-manager certificate to use for HTTPS | `false` |
-| cert_manager_issuer_name | "Name of an cert-manager Issuer in the same kubernetes namespace or cluster wide (depends on issuer_type) | `""` |
-| cert_manager_issuer_type | Type of the Issuer specified in cert_manager_issuer_name. Either ClusterIssuer or Issuer | `"Issuer"` | 
+| cert_manager_issuer_name | "Name of an cert-manager Issuer in the same kubernetes namespace or cluster wide (depends on issuer_kind) | `""` |
+| cert_manager_issuer_kind | Type of the Issuer specified in cert_manager_issuer_name. Either ClusterIssuer or Issuer | `"Issuer"` | 
 | deploy_selfsigning_issuer | If there is no certificate issuer available we can deploy a selfsigning issuer to issue certificates | `false` |
 | encrypted_user | Encrypted or plain username for the version control to use | `""` |
 | encrypted_token | Encrypted or plain token for the version control to use | `""` |

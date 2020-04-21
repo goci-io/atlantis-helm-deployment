@@ -154,7 +154,7 @@ variable "cert_manager_issuer_name" {
   description = "Name of an cert-manager Issuer in the same kubernetes namespace or cluster wide (depends on issuer_type)"
 }
 
-variable "cert_manager_issuer_type" {
+variable "cert_manager_issuer_kind" {
   type        = string
   default     = "Issuer"
   description = "Type of the Issuer specified in cert_manager_issuer_name. Either ClusterIssuer or Issuer"
