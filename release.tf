@@ -31,7 +31,7 @@ resource "helm_release" "atlantis" {
     value = "https://${var.name}.${var.cluster_fqdn}"
   }
 
-  set {
+  set_string {
     name  = "repoConfig"
     value = local.repos_config
   }
