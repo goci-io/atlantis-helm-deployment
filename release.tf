@@ -26,6 +26,7 @@ resource "helm_release" "atlantis" {
       stage              = var.stage
       region             = var.region
       cluster_fqdn       = var.cluster_fqdn
+      pod_annotations    = var.pod_annotations
       apply_requirements = join(",", var.apply_requirements)
     }),
     file("${path.module}/values.yaml"),
@@ -42,15 +43,6 @@ resource "helm_release" "atlantis" {
     content {
       name  = format("%s.%s", var.vc_type, set_sensitive.value)
       value = local.sensitives[set_sensitive.value]
-    }
-  }
-  
-  dynamic "set" {
-    for_each = var.pod_annotations
-
-    content {
-      name  = format("podTemplate.annotations.%s", replace(set.key, "\\.", "\\\\\\."))
-      value = set.value
     }
   }
 

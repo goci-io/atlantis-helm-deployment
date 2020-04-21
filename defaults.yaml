@@ -7,6 +7,12 @@ image:
   repository: gocidocker/atlantis
   tag: 0.1.0
 
+podTemplate:
+  annotations:
+%{ for key, annotation in pod_annotations ~}
+    ${key}: ${annotation}
+%{ endfor ~}
+
 repoConfig: |
   ---
   repos:
