@@ -1,0 +1,41 @@
+# The use of certificates managed by cert-manager
+# requires you to have the CRDs of cert-manager installed on your cluster.
+# The helm release contains all necessary resource definitions:
+# https://github.com/goci-io/aws-cert-manager-helm
+
+%{ if deploy_selfsigning_issuer ~}
+apiVersion: cert-manager.io/v1alpha2
+kind: Issuer
+metadata:
+  name: selfsigning-ca
+  namespace: ${k8s_namespace}
+spec:
+  selfSigned: {}
+
+---
+%{ endif ~}
+
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  name: ${app_name}
+  namespace: ${k8s_namespace}
+spec:
+  secretName: ${app_name}-tls
+  commonName: ${app_name}
+  issuerRef:
+%{ if deploy_selfsigning_issuer ~}
+    name: ${app_name}-ca
+%{ else ~}
+    name: ${issuer_name}
+    kind: ${issuer_kind}
+%{ endif ~}
+  dnsNames:
+%{ for dns in dns_names ~}
+  - "${dns}"
+%{ endfor ~}
+  usages:
+  - "key encipherment"
+  - "digital signature"
+  - "client auth"
+  - "server auth"

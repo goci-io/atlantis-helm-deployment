@@ -6,6 +6,9 @@ locals {
     bitbucket = "baseURL"
   }
 
+  release_name = length(var.attributes) > 0 ? format("%s-%s", var.name, join("-", var.attributes)) : var.name
+  atlantis_url = format("%s.%s", local.release_name, var.cluster_fqdn)
+
   environment_variables = merge({
     namespace = var.namespace
   }, var.environment_variables)

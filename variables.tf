@@ -135,3 +135,27 @@ variable "environment_variables" {
   default     = {}
   description = "Additional environment variables to add to the pod template"
 }
+
+variable "deploy_cert_manager_certificate" {
+  type        = bool
+  default     = false
+  description = "Deploys cert-manager certificate to use for HTTPS"
+}
+
+variable "cert_manager_issuer_name" {
+  type        = string
+  default     = ""
+  description = "Name of an cert-manager Issuer in the same kubernetes namespace or cluster wide (depends on issuer_type)"
+}
+
+variable "cert_manager_issuer_type" {
+  type        = string
+  default     = "Issuer"
+  description = "Type of the Issuer specified in cert_manager_issuer_name. Either ClusterIssuer or Issuer"
+}
+
+variable "deploy_selfsigning_issuer" {
+  type        = bool
+  default     = false
+  description = "If there is no certificate issuer available we can deploy a selfsigning issuer to issue certificates"
+}
