@@ -2,10 +2,10 @@
 
 **Maintained by [@goci-io/prp-terraform](https://github.com/orgs/goci-io/teams/prp-terraform)**
 
-This module deploys [Atlantis](https://www.runatlantis.io/) as helm release and provides a server side workflow definition.
+This module deploys [Atlantis](https://www.runatlantis.io/) as helm release, provides a server side workflow definition and optionally creates required [cert-manager](https://github.com/goci-io/aws-cert-manager-helm) `Certificate` resource to use for HTTPS.
+
 We extend the [runatlantis/atlantis](https://hub.docker.com/r/runatlantis/atlantis/) image by adding [`tfenv`](https://github.com/cloudposse/tfenv). 
 By adding `tfenv` into the process you can access all environment variables as terraform variables.
-
 The docker image is pushed to [gocidocker](https://hub.docker.com/u/gocidocker) on docker using [hub.docker.com]'s autobuild configuration.
 Once a new release is created with a tag following the convention of `<major>.<minor>[.<patch>]-atlantis` the docker image build will be triggered
 
@@ -89,6 +89,10 @@ For the AWS workflow the following environment variables are required:
 | pod_annotations | Additional map of annotations to add to the pod template | `{}` |
 | helm_release_version | Version of helm chart to use for the deployment | `"3.10.1"` |
 | apply_requirements | Requirements any pull request needs to fulfil before planning terraform diff | `["mergeable", "approved"]` |
+| deploy_cert_manager_certificate | Deploys cert-manager certificate to use for HTTPS | `false` |
+| cert_manager_issuer_name | "Name of an cert-manager Issuer in the same kubernetes namespace or cluster wide (depends on issuer_type) | `""` |
+| cert_manager_issuer_type | Type of the Issuer specified in cert_manager_issuer_name. Either ClusterIssuer or Issuer | `"Issuer"` | 
+| deploy_selfsigning_issuer | If there is no certificate issuer available we can deploy a selfsigning issuer to issue certificates | `false` |
 | encrypted_user | Encrypted or plain username for the version control to use | `""` |
 | encrypted_token | Encrypted or plain token for the version control to use | `""` |
 | encrypted_secret | Encrypted or plain webhook secret to use | `""` |
@@ -99,3 +103,4 @@ For the AWS workflow the following environment variables are required:
 | ssm_parameter_secret | SSM Parameter name identifying the webhook secret | `""` |
 
 Either `encrypted_` variable values need to specify an encrypted string, used to decrypt during plan and apply or you will need to provide AWS SSM parameter names to specify the secrets. As a last rescue you can specify plain secrets in the `encrypted_` variables (which is not suggested). 
+
