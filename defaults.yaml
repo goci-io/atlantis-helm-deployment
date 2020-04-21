@@ -45,3 +45,9 @@ repoConfig: |
 
 ingress:
   host: ${atlantis_url}
+%{ if tls_secret != "" ~}
+  tls:
+  - hosts:
+    - ${atlantis_url}
+    secretName: ${tls_secret}
+%{ endif ~}
