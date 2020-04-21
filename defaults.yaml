@@ -1,7 +1,7 @@
 dataStorage: 8Gi
 defaultTFVersion: 0.12.24
 orgWhitelist: ${organization}
-atlantisUrl: https://${var.name}.${var.cluster_fqdn}
+atlantisUrl: https://${name}.${cluster_fqdn}
 
 image:
   repository: gocidocker/atlantis
