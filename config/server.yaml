@@ -1,10 +1,11 @@
+---
 repos:
 %{ for repo in repos ~}
 - id: "${vc_host}/${organization}/${repo}"
   apply_requirements: [${apply_requirements}]
   allowed_overrides: [workflow]
   allow_custom_workflows: false
-  workflow: "default-aws"
+  workflow: default-aws
 %{ endfor ~}
 
 workflows:
