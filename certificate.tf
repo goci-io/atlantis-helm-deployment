@@ -11,7 +11,8 @@ locals {
 }
 
 resource "null_resource" "apply_certificate" {
-  count = var.deploy_cert_manager_certificate ? 1 : 0
+  count      = var.deploy_cert_manager_certificate ? 1 : 0
+  depends_on = [null_resource.destroy_certificate]
 
   provisioner "local-exec" {
     command = "echo \"${self.triggers.content}\" | kubectl apply -f -"
@@ -27,7 +28,7 @@ resource "null_resource" "destroy_certificate" {
 
   provisioner "local-exec" {
     when    = destroy
-    command = "echo \"${self.triggers.content}\" | kubectl delete -f -"
+    command = "echo \"${self.triggers.content}\" | kubectl delete -f - --ignore-not-found"
   }
 
   triggers = {
