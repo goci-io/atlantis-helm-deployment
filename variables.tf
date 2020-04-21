@@ -60,6 +60,12 @@ variable "helm_release_version" {
   description = "Version of the helm release to deploy"
 }
 
+variable "helm_values_root" {
+  type        = string
+  default     = "."
+  description = "Path to the directory containing values.yaml for helm to overwrite any defaults"
+}
+
 variable "aws_region" {
   type        = string
   description = "AWS Region to deploy atlantis to"

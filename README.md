@@ -87,7 +87,8 @@ For the AWS workflow the following environment variables are required:
 | environment_variables | Map of additional environment variables to attach to the atlantis pod | `{}` |
 | k8s_namespace | The kubernetes namespace to deploy the helm release into | `"provisioning"` |
 | pod_annotations | Additional map of annotations to add to the pod template | `{}` |
-| helm_release_version | Version of helm chart to use for the deployment | `"3.10.1"` |
+| helm_release_version | Version of helm chart to use for the deployment | `"3.11.1"` |
+| helm_values_root | Path to the directory containing values.yaml for helm to overwrite any defaults | `.` |
 | apply_requirements | Requirements any pull request needs to fulfil before planning terraform diff | `["mergeable", "approved"]` |
 | deploy_cert_manager_certificate | Deploys cert-manager certificate to use for HTTPS | `false` |
 | cert_manager_issuer_name | "Name of an cert-manager Issuer in the same kubernetes namespace or cluster wide (depends on issuer_type) | `""` |

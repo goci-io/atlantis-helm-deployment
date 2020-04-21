@@ -26,7 +26,7 @@ resource "helm_release" "atlantis" {
       pod_annotations    = var.pod_annotations
       apply_requirements = join(",", var.apply_requirements)
     }),
-    file("${path.module}/values.yaml"),
+    file("${var.helm_values_root}/values.yaml"),
   ]
 
   set {
