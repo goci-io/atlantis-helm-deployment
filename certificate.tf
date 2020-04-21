@@ -12,7 +12,6 @@ locals {
 
 resource "null_resource" "apply_certificate" {
   count      = var.deploy_cert_manager_certificate ? 1 : 0
-  depends_on = [null_resource.destroy_certificate]
 
   provisioner "local-exec" {
     command = "echo \"${self.triggers.content}\" | kubectl apply -f -"
