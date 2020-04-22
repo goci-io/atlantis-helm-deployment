@@ -58,7 +58,7 @@ ingress:
     - ${atlantis_url}
     secretName: ${tls_secret}
 %{ endif ~}
-%{ if ingress_class ~}
+%{ if ingress_class != "" ~}
   annotations:
     kubernetes.io/ingress.class: ${ingress_class}
 %{ endif ~}
