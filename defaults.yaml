@@ -7,6 +7,13 @@ image:
   repository: gocidocker/atlantis
   tag: 0.1.0
 
+%{ if tls_secret != "" ~}
+livenessProbe:
+  scheme: HTTPS
+readinessProbe:
+  scheme: HTTPS
+%{ endif ~}
+
 service:
   type: ClusterIP
 %{ if tls_secret != "" ~}
