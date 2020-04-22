@@ -22,6 +22,7 @@ resource "helm_release" "atlantis" {
       stage              = var.stage
       region             = var.region
       tls_secret         = var.deploy_cert_manager_certificate ? format("%s-tls", local.release_name) : ""
+      ingress_class      = var.ingress_class
       atlantis_url       = local.atlantis_url
       pod_annotations    = var.pod_annotations
       apply_requirements = join(",", var.apply_requirements)

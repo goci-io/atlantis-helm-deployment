@@ -165,3 +165,9 @@ variable "deploy_selfsigning_issuer" {
   default     = false
   description = "If there is no certificate issuer available we can deploy a selfsigning issuer to issue certificates"
 }
+
+variable "ingress_class" {
+  type        = string
+  default     = ""
+  description = "If set the ingress will be annotated with kubernetes.io/ingress.class"
+}

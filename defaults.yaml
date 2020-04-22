@@ -7,6 +7,13 @@ image:
   repository: gocidocker/atlantis
   tag: 0.1.0
 
+service:
+%{ if tls_secret != "" ~}
+  port: 443
+%{ else ~}
+  port: 80
+%{ endif ~}
+
 podTemplate:
   annotations:
 %{ for key, annotation in pod_annotations ~}
@@ -50,4 +57,8 @@ ingress:
   - hosts:
     - ${atlantis_url}
     secretName: ${tls_secret}
+%{ endif ~}
+%{ if ingress_class ~}
+  annotations:
+    kubernetes.io/ingress.class: ${ingress_class}
 %{ endif ~}
