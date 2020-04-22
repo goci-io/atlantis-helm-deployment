@@ -8,6 +8,7 @@ image:
   tag: 0.1.0
 
 service:
+  type: ClusterIP
 %{ if tls_secret != "" ~}
   port: 443
 %{ else ~}
