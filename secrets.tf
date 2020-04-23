@@ -50,7 +50,7 @@ data "aws_lambda_invocation" "decrypt_additional" {
 
 resource "kubernetes_secret" "custom_secrets" {
   count = length(local.secret_keys) > 0 ? 1 : 0
-  data  = local.decrypt_result
+  data  = local.decrypt_secrets_result
 
   metadata {
     name      = local.secrets_name
