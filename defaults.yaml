@@ -40,7 +40,7 @@ repoConfig: |
     apply_requirements: [${apply_requirements}]
     allowed_overrides: [workflow]
     allow_custom_workflows: false
-    workflow: default-aws
+    workflow: default
 %{ endfor ~}
 
   workflows:
@@ -56,6 +56,14 @@ repoConfig: |
             command: 'echo "-backend-config=bucket=$${TF_BUCKET} -backend-config=encrypt=true -backend-config=region=$${AWS_DEFAULT_REGION} -no-color"'
         - run: rm -rf *.terraform *.tfstate*
         - run: terraform init -backend-config=key=$${PROJECT_NAME}/terraform.tfstate
+        - plan
+    default:
+      plan:
+        steps:
+        - run: "eval $(tfenv)"
+        - env:
+            name: TF_VAR_stage
+            command: 'echo $${WORKSPACE}'
         - plan
 
 ingress:
