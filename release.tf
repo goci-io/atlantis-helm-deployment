@@ -9,9 +9,9 @@ locals {
     { "nginx.ingress.kubernetes.io/force-ssl-redirect" = "true" },
   ]
 
-  cert_manager_issuer_type = var.cert_manager_issuer_name == "" ? "cluster-issuer" : "issuer"
-  cert_manager_issuer      = var.cert_manager_issuer_name == "" ? var.cert_manager_cluster_issuer_name : var.cert_manager_issuer_name
-  cert_manager_annotations = var.configure_cert_manager ? [{ "cert-manager.io/${local.cert_manager_issuer_type}" = local.cert_manager_issuer }] : []
+  cert_manager_issuer_type  = var.cert_manager_issuer_name == "" ? "cluster-issuer" : "issuer"
+  cert_manager_issuer       = var.cert_manager_issuer_name == "" ? var.cert_manager_cluster_issuer_name : var.cert_manager_issuer_name
+  cert_manager_annotations  = var.configure_cert_manager ? [{ "cert-manager.io/${local.cert_manager_issuer_type}" = local.cert_manager_issuer }] : []
   ingress_class_annotations = var.ingress_class == "" ? [] : [{ "kubernetes.io/ingress.class" = var.ingress_class }]
   nginx_ingress_annotations = var.configure_nginx ? local.default_nginx_annotations : []
 
