@@ -42,6 +42,10 @@ module "atlantis" {
 
 This is the default workflow if none is set. It simply uses `tfenv` and sets `TF_VAR_stage` to the current `$WORKSPACE`. On plan it initializes the workspace and creates the plan.
 
+#### `validate`
+
+The validate workflow runs `init` and `terraform validate` for the plan status check only.
+
 #### `default-aws` 
 
 This is the default workflow for Terraform with an [AWS S3 backend](https://www.terraform.io/docs/backends/types/s3.html) and default AWS region set.

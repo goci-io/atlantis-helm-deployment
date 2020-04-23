@@ -63,8 +63,13 @@ repoConfig: |
         - env:
             name: TF_VAR_stage
             command: 'echo $${WORKSPACE}'
-        - run: terraform init
+        - init
         - plan
+    validate:
+      plan:
+        steps:
+        - init
+        - run: terraform validate -no-color
 
 ingress:
   host: ${atlantis_url}
