@@ -54,7 +54,6 @@ repoConfig: |
         - env:
             name: TF_CLI_ARGS_init
             command: 'echo "-backend-config=bucket=$${TF_BUCKET} -backend-config=encrypt=true -backend-config=region=$${AWS_DEFAULT_REGION} -no-color"'
-        - run: rm -rf *.terraform *.tfstate*
         - run: terraform init -backend-config=key=$${PROJECT_NAME}/terraform.tfstate
         - plan
     default:
@@ -64,6 +63,7 @@ repoConfig: |
         - env:
             name: TF_VAR_stage
             command: 'echo $${WORKSPACE}'
+        - run: terraform init
         - plan
 
 ingress:
