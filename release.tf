@@ -15,6 +15,7 @@ locals {
   ingress_class_annotations = var.ingress_class == "" ? [] : [{ "kubernetes.io/ingress.class" = var.ingress_class }]
   nginx_ingress_annotations = var.configure_nginx ? local.default_nginx_annotations : []
 
+  enable_tls          = var.configure_cert_manager || var.enable_tls
   ingress_annotations = concat([], local.cert_manager_annotations, local.ingress_class_annotations, local.nginx_ingress_annotations)
 }
 
