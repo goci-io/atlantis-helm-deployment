@@ -66,7 +66,9 @@ ingress:
     - ${atlantis_url}
     secretName: ${tls_secret}
 %{ endif ~}
-%{ if ingress_class != "" ~}
+%{ if length(ingress_annotations) > 0 ~}
   annotations:
-    kubernetes.io/ingress.class: ${ingress_class}
+%{ for key, val in ingress_annotations ~}
+    ${key}: ${val}
+%{ endfor ~}
 %{ endif ~}

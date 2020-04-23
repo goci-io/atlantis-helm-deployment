@@ -142,32 +142,44 @@ variable "environment_variables" {
   description = "Additional environment variables to add to the pod template"
 }
 
-variable "deploy_cert_manager_certificate" {
+variable "enable_tls" {
   type        = bool
   default     = false
-  description = "Deploys cert-manager certificate to use for HTTPS"
+  description = "Configures the TLS configuration options for the ingress pointing to secret called <name>-tls. Automatically enabled when configure_cert_manager is set to true"
+}
+
+variable "configure_cert_manager" {
+  type        = bool
+  default     = false
+  description = "Adds required annotations to use cert-manager"
 }
 
 variable "cert_manager_issuer_name" {
   type        = string
   default     = ""
-  description = "Name of an cert-manager Issuer in the same kubernetes namespace or cluster wide (depends on issuer_type)"
+  description = "The Issuer to use to create the certificate with cert-manager"
 }
 
-variable "cert_manager_issuer_kind" {
+variable "cert_manager_cluster_issuer_name" {
   type        = string
-  default     = "Issuer"
-  description = "Type of the Issuer specified in cert_manager_issuer_name. Either ClusterIssuer or Issuer"
+  default     = ""
+  description = "The ClusterIssuer to use to create the certificate with cert-manager. Conflicts with cert_manager_issuer_name"
 }
 
-variable "deploy_selfsigning_issuer" {
+variable "configure_nginx" {
   type        = bool
   default     = false
-  description = "If there is no certificate issuer available we can deploy a selfsigning issuer to issue certificates"
+  description = "Creates nginx annotations on the ingress with SSL passthrough enabled"
 }
 
 variable "ingress_class" {
   type        = string
   default     = ""
   description = "If set the ingress will be annotated with kubernetes.io/ingress.class"
+}
+
+variable "ingress_annotations" {
+  type        = list(map(string))
+  default     = []
+  description = "Additional annotations for the ingress. Eg if none of the existing preconfiguration suits your needs. You can also use values.yaml to override any configuration."
 }

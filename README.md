@@ -90,10 +90,13 @@ For the AWS workflow the following environment variables are required:
 | helm_release_version | Version of helm chart to use for the deployment | `"3.11.1"` |
 | helm_values_root | Path to the directory containing values.yaml for helm to overwrite any defaults | `.` |
 | apply_requirements | Requirements any pull request needs to fulfil before planning terraform diff | `["mergeable", "approved"]` |
-| deploy_cert_manager_certificate | Deploys cert-manager certificate to use for HTTPS | `false` |
-| cert_manager_issuer_name | "Name of an cert-manager Issuer in the same kubernetes namespace or cluster wide (depends on issuer_kind) | `""` |
-| cert_manager_issuer_kind | Type of the Issuer specified in cert_manager_issuer_name. Either ClusterIssuer or Issuer | `"Issuer"` | 
-| deploy_selfsigning_issuer | If there is no certificate issuer available we can deploy a selfsigning issuer to issue certificates | `false` |
+| enable_tls | Configures the TLS configuration options for the ingress pointing to secret called <name>-tls. Automatically enabled when configure_cert_manager is set to true | `false` |
+| configure_cert_manager | Configures cert-manager certificate for the ingress | `false` |
+| cert_manager_issuer_name | The Issuer to use to create the certificate with cert-manager | `""` |
+| cert_manager_cluster_issuer_name | The ClusterIssuer to use to create the certificate with cert-manager. Conflicts with cert_manager_issuer_name | `""` | 
+| configure_nginx | Creates nginx annotations on the ingress with SSL passthrough enabled | `false` |
+| ingress_class | Ingress class to use for the `kubernetes.io/ingress.class` annotation | `""` |
+| ingress_annotations | Additional annotations to add to the ingress. Eg if none of the preconfiguration suits your needs | `[]` | 
 | encrypted_user | Encrypted or plain username for the version control to use | `""` |
 | encrypted_token | Encrypted or plain token for the version control to use | `""` |
 | encrypted_secret | Encrypted or plain webhook secret to use | `""` |
