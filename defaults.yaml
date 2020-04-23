@@ -1,6 +1,6 @@
 dataStorage: 8Gi
 defaultTFVersion: 0.12.24
-orgWhitelist: ${organization}
+orgWhitelist: ${vc_host}/${organization}/*
 atlantisUrl: https://${atlantis_url}
 
 image:
