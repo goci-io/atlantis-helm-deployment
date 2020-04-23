@@ -38,6 +38,10 @@ module "atlantis" {
 
 ### Workflows
 
+#### `default` 
+
+This is the default workflow if none is set. It simply uses `tfenv` and sets `TF_VAR_stage` to the current `$WORKSPACE`. On plan it initializes the workspace and creates the plan.
+
 #### `default-aws` 
 
 This is the default workflow for Terraform with an [AWS S3 backend](https://www.terraform.io/docs/backends/types/s3.html) and default AWS region set.
@@ -51,12 +55,14 @@ projects:
 - dir: modules/cloudtrail
   name: cloudtrail
   workspace: staging
+  workflow: default-aws
   autoplan:
     when_modified: ["modules/cloudtrail/*.tf", "*.tf*"]
     enabled: true
 - dir: modules/cloudtrail
   name: cloudtrail
   workspace: prod
+  workflow: default-aws
   autoplan:
     when_modified: ["modules/cloudtrail/*.tf", "*.tf*"]
     enabled: true
