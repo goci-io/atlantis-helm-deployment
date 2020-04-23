@@ -69,6 +69,6 @@ ingress:
 %{ if length(ingress_annotations) > 0 ~}
   annotations:
 %{ for key, val in ingress_annotations ~}
-    ${key}: ${val}
+    ${key}: "${val}"
 %{ endfor ~}
 %{ endif ~}

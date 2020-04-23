@@ -179,7 +179,7 @@ variable "ingress_class" {
 }
 
 variable "ingress_annotations" {
-  type        = list(map(string))
-  default     = []
+  type        = map(string)
+  default     = {}
   description = "Additional annotations for the ingress. Eg if none of the existing preconfiguration suits your needs. You can also use values.yaml to override any configuration."
 }

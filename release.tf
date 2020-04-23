@@ -4,19 +4,19 @@ data "helm_repository" "stable" {
 }
 
 locals {
-  default_nginx_annotations = [
-    { "nginx.ingress.kubernetes.io/ssl-passthrough" = "true" },
-    { "nginx.ingress.kubernetes.io/force-ssl-redirect" = "true" },
-  ]
+  default_nginx_annotations = {
+    "nginx.ingress.kubernetes.io/ssl-passthrough" = "true",
+    "nginx.ingress.kubernetes.io/force-ssl-redirect" = "true",
+  }
 
   cert_manager_issuer_type  = var.cert_manager_issuer_name == "" ? "cluster-issuer" : "issuer"
   cert_manager_issuer       = var.cert_manager_issuer_name == "" ? var.cert_manager_cluster_issuer_name : var.cert_manager_issuer_name
-  cert_manager_annotations  = var.configure_cert_manager ? [{ "cert-manager.io/${local.cert_manager_issuer_type}" = local.cert_manager_issuer }] : []
-  ingress_class_annotations = var.ingress_class == "" ? [] : [{ "kubernetes.io/ingress.class" = var.ingress_class }]
-  nginx_ingress_annotations = var.configure_nginx ? local.default_nginx_annotations : []
+  cert_manager_annotations  = var.configure_cert_manager ? { "cert-manager.io/${local.cert_manager_issuer_type}" = local.cert_manager_issuer } : {}
+  ingress_class_annotations = var.ingress_class == "" ? {} : { "kubernetes.io/ingress.class" = var.ingress_class }]
+  nginx_ingress_annotations = var.configure_nginx ? local.default_nginx_annotations : {}
 
   enable_tls          = var.configure_cert_manager || var.enable_tls
-  ingress_annotations = concat([], local.cert_manager_annotations, local.ingress_class_annotations, local.nginx_ingress_annotations)
+  ingress_annotations = merge({}, local.cert_manager_annotations, local.ingress_class_annotations, local.nginx_ingress_annotations)
 }
 
 resource "helm_release" "atlantis" {
