@@ -183,3 +183,9 @@ variable "ingress_annotations" {
   default     = {}
   description = "Additional annotations for the ingress. Eg if none of the existing preconfiguration suits your needs. You can also use values.yaml to override any configuration."
 }
+
+variable "lambda_custom_secrets" {
+  type        = map(string)
+  default     = {}
+  description = "Additional secrets to add to the pods as kubernetes secret. Can only be used in conjunction with lambda_encryption_function"
+}
