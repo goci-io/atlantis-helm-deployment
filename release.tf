@@ -3,6 +3,21 @@ data "helm_repository" "stable" {
   url  = "https://kubernetes-charts.storage.googleapis.com"
 }
 
+locals {
+  default_nginx_annotations = [
+    { "nginx.ingress.kubernetes.io/ssl-passthrough" = "true" },
+    { "nginx.ingress.kubernetes.io/force-ssl-redirect" = "true" },
+  ]
+
+  cert_manager_issuer_type = var.cert_manager_issuer_name == "" ? "cluster-issuer" : "issuer"
+  cert_manager_issuer      = var.cert_manager_issuer_name == "" ? var.cert_manager_cluster_issuer_name : var.cert_manager_issuer_name
+  cert_manager_annotations = var.configure_cert_manager ? [{ "cert-manager.io/${local.cert_manager_issuer_type}" = local.cert_manager_issuer }] : []
+  ingress_class_annotations = var.ingress_class == "" ? [] : [{ "kubernetes.io/ingress.class" = var.ingress_class }]
+  nginx_ingress_annotations = var.configure_nginx ? local.default_nginx_annotations : []
+
+  ingress_annotations = concat([], local.cert_manager_annotations, local.ingress_class_annotations, local.nginx_ingress_annotations)
+}
+
 resource "helm_release" "atlantis" {
   name          = local.release_name
   namespace     = var.k8s_namespace
@@ -14,18 +29,18 @@ resource "helm_release" "atlantis" {
 
   values = [
     templatefile("${path.module}/defaults.yaml", {
-      repos              = var.repositories
-      organization       = var.organization
-      vc_host            = var.vc_host
-      namespace          = var.namespace
-      name               = var.name
-      stage              = var.stage
-      region             = var.region
-      tls_secret         = var.deploy_cert_manager_certificate ? format("%s-tls", local.release_name) : ""
-      ingress_class      = var.ingress_class
-      atlantis_url       = local.atlantis_url
-      pod_annotations    = var.pod_annotations
-      apply_requirements = join(",", var.apply_requirements)
+      repos               = var.repositories
+      organization        = var.organization
+      vc_host             = var.vc_host
+      namespace           = var.namespace
+      name                = var.name
+      stage               = var.stage
+      region              = var.region
+      tls_secret          = local.enable_tls ? format("%s-tls", local.release_name) : ""
+      ingress_annotations = local.ingress_annotations
+      atlantis_url        = local.atlantis_url
+      pod_annotations     = var.pod_annotations
+      apply_requirements  = join(",", var.apply_requirements)
     }),
     file("${var.helm_values_root}/values.yaml"),
   ]
