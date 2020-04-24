@@ -28,7 +28,6 @@ data "aws_lambda_invocation" "decrypt" {
 
 locals {
   decrypt_result = data.aws_lambda_invocation.decrypt.*.result_map
-  tf_env_secrets = zipmap(formatlist("TF_VAR_%s", keys(var.terraform_environment_variables)), values(var.terraform_environment_variables))
 
   sensitives = {
     user   = join("", coalescelist(local.decrypt_result.*.user, data.aws_ssm_parameter.user.*.value, [var.encrypted_user]))
@@ -39,7 +38,7 @@ locals {
 
 resource "kubernetes_secret" "custom_secrets" {
   count = length(var.terraform_environment_variables) > 0 ? 1 : 0
-  data  = local.tf_env_secrets
+  data  = var.terraform_environment_variables
 
   metadata {
     name      = format("%s-custom", local.release_name)
