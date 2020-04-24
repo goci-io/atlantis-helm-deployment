@@ -35,3 +35,13 @@ locals {
     secret = join("", coalescelist(local.decrypt_result.*.secret, data.aws_ssm_parameter.secret.*.value, [var.encrypted_secret]))
   }
 }
+
+resource "kubernetes_secret" "custom_secrets" {
+  count = length(var.terraform_environment_variables) > 0 ? 1 : 0
+  data  = var.terraform_environment_variables
+
+  metadata {
+    name      = format("%s-custom", local.release_name)
+    namespace = var.k8s_namespace
+  }
+}

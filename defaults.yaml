@@ -31,6 +31,15 @@ podTemplate:
 %{ if tls_secret != "" ~}
 tlsSecretName: ${tls_secret}
 %{ endif ~}
+%{ if length(terraform_env) > 0 ~}
+%{ for key, val in terraform_env ~}
+environmentSecrets:
+  name: TF_VAR_${key}
+  secretKeyRef:
+    name: ${release}-custom
+    key: ${key}
+%{ endfor ~}
+%{ endif ~}
 
 repoConfig: |
   ---
@@ -47,10 +56,14 @@ repoConfig: |
     default-aws:
       plan:
         steps:
-        - run: "eval $(tfenv)"
         - env:
             name: TF_VAR_stage
             command: 'echo $${WORKSPACE}'
+%{ for key, val in terraform_env ~}
+        - env:
+            name: ${key}
+            command: 'echo $${${val}}'
+%{ endfor ~}
         - env:
             name: TF_CLI_ARGS_init
             command: 'echo "-backend-config=bucket=$${TF_BUCKET} -backend-config=encrypt=true -backend-config=region=$${AWS_DEFAULT_REGION} -no-color"'
@@ -59,10 +72,14 @@ repoConfig: |
     default:
       plan:
         steps:
-        - run: "eval $(tfenv)"
         - env:
             name: TF_VAR_stage
             command: 'echo $${WORKSPACE}'
+%{ for key, val in terraform_env ~}
+        - env:
+            name: ${key}
+            command: 'echo $${${val}}'
+%{ endfor ~}
         - init
         - plan
     validate:
