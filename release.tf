@@ -37,7 +37,8 @@ resource "helm_release" "atlantis" {
       stage               = var.stage
       region              = var.region
       release             = local.release_name
-      terraform_env       = local.tf_env_secrets
+      terraform_env       = var.terraform_environment_variables
+      atlantis_env_expose = var.exposed_atlantis_environment_variables
       tls_secret          = local.enable_tls ? format("%s-tls", local.release_name) : ""
       ingress_annotations = local.ingress_annotations
       atlantis_url        = local.atlantis_url

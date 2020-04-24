@@ -189,3 +189,9 @@ variable "terraform_environment_variables" {
   default     = {}
   description = "Additional terraform variables available as terraform variable (TF_VAR prefix)"
 }
+
+variable "exposed_atlantis_environment_variables" {
+  type        = map(string)
+  default     = {}
+  description = "Variables to expose to Terraform environment from Atlantis pod environment itself"
+}
