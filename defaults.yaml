@@ -56,7 +56,6 @@ repoConfig: |
     default-aws:
       plan:
         steps:
-        - env: "eval $(tfenv)"
         - env:
             name: TF_VAR_stage
             command: 'echo $${WORKSPACE}'
@@ -73,7 +72,6 @@ repoConfig: |
     default:
       plan:
         steps:
-        - run: "eval $(tfenv)"
         - env:
             name: TF_VAR_stage
             command: 'echo $${WORKSPACE}'
