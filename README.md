@@ -101,6 +101,7 @@ For the AWS workflow the following environment variables are required:
 | helm_values_root | Path to the directory containing values.yaml for helm to overwrite any defaults | `.` |
 | apply_requirements | Requirements any pull request needs to fulfil before planning terraform diff | `["mergeable", "approved"]` |
 | enable_tls | Configures the TLS configuration options for the ingress pointing to secret called <name>-tls. Automatically enabled when configure_cert_manager is set to true | `false` |
+| terraform_environment_variables | Map of variables to add to the terraform env (`TF_VAR_`) | `{}` |
 | configure_cert_manager | Configures cert-manager certificate for the ingress | `false` |
 | cert_manager_issuer_name | The Issuer to use to create the certificate with cert-manager | `""` |
 | cert_manager_cluster_issuer_name | The ClusterIssuer to use to create the certificate with cert-manager. Conflicts with cert_manager_issuer_name | `""` | 
