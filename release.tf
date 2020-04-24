@@ -5,7 +5,7 @@ data "helm_repository" "stable" {
 
 locals {
   default_nginx_annotations = {
-    "nginx.ingress.kubernetes.io/ssl-passthrough" = "true",
+    "nginx.ingress.kubernetes.io/ssl-passthrough"    = "true",
     "nginx.ingress.kubernetes.io/force-ssl-redirect" = "true",
   }
 
