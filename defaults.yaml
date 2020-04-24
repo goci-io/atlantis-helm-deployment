@@ -34,7 +34,7 @@ tlsSecretName: ${tls_secret}
 %{ if length(terraform_env) > 0 ~}
 %{ for key, val in terraform_env ~}
 environmentSecrets:
-  name: ${key}
+  name: ${val}
   secretKeyRef:
     name: ${release}-custom
     key: ${key}
