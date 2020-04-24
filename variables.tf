@@ -183,3 +183,9 @@ variable "ingress_annotations" {
   default     = {}
   description = "Additional annotations for the ingress. Eg if none of the existing preconfiguration suits your needs. You can also use values.yaml to override any configuration."
 }
+
+variable "terraform_environment_variables" {
+  type        = map(string)
+  default     = {}
+  description = "Additional terraform variables available as terraform variable (TF_VAR prefix)"
+}

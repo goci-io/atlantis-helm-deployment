@@ -28,10 +28,21 @@ data "aws_lambda_invocation" "decrypt" {
 
 locals {
   decrypt_result = data.aws_lambda_invocation.decrypt.*.result_map
+  tf_env_secrets = zipmap(formatlist("TF_VAR_%s", keys(var.terraform_environment_variables)), values(var.terraform_environment_variables))
 
   sensitives = {
     user   = join("", coalescelist(local.decrypt_result.*.user, data.aws_ssm_parameter.user.*.value, [var.encrypted_user]))
     token  = join("", coalescelist(local.decrypt_result.*.token, data.aws_ssm_parameter.token.*.value, [var.encrypted_token]))
     secret = join("", coalescelist(local.decrypt_result.*.secret, data.aws_ssm_parameter.secret.*.value, [var.encrypted_secret]))
+  }
+}
+
+resource "kubernetes_secret" "custom_secrets" {
+  count = length(var.terraform_environment_variables) > 0 ? 1 : 0
+  data  = local.tf_env_secrets
+
+  metadata {
+    name      = format("%s-custom", local.release_name)
+    namespace = var.k8s_namespace
   }
 }
