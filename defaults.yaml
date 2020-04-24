@@ -34,7 +34,7 @@ tlsSecretName: ${tls_secret}
 %{ if length(terraform_env) > 0 ~}
 %{ for key, val in terraform_env ~}
 environmentSecrets:
-  name: TF_VAR_${key}
+  name: ${val}
   secretKeyRef:
     name: ${release}-custom
     key: ${key}
@@ -59,9 +59,9 @@ repoConfig: |
         - env:
             name: TF_VAR_stage
             command: 'echo $${WORKSPACE}'
-%{ for key, val in terraform_env ~}
+%{ for key, val in merge(terraform_env, atlantis_env_expose) ~}
         - env:
-            name: ${key}
+            name: TF_VAR_${key}
             command: 'echo $${${val}}'
 %{ endfor ~}
         - env:
@@ -75,9 +75,9 @@ repoConfig: |
         - env:
             name: TF_VAR_stage
             command: 'echo $${WORKSPACE}'
-%{ for key, val in terraform_env ~}
+%{ for key, val in merge(terraform_env, atlantis_env_expose) ~}
         - env:
-            name: ${key}
+            name: TF_VAR_${key}
             command: 'echo $${${val}}'
 %{ endfor ~}
         - init
