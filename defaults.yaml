@@ -7,10 +7,14 @@ image:
   repository: gocidocker/atlantis
   tag: 0.1.0
 
-%{ if tls_secret != "" ~}
 livenessProbe:
+  periodSeconds: 30
+%{ if tls_secret != "" ~}
   scheme: HTTPS
+%{ endif ~}
 readinessProbe:
+  periodSeconds: 30
+%{ if tls_secret != "" ~}
   scheme: HTTPS
 %{ endif ~}
 
