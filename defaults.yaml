@@ -31,10 +31,6 @@ podTemplate:
 %{ if tls_secret != "" ~}
 tlsSecretName: ${tls_secret}
 %{ endif ~}
-%{ if custom_secrets_name != "" ~}
-serviceAccountSecrets:
-- ${custom_secrets_name}
-%{ endif ~}
 
 repoConfig: |
   ---
