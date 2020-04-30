@@ -2,7 +2,7 @@
 
 **Maintained by [@goci-io/prp-terraform](https://github.com/orgs/goci-io/teams/prp-terraform)**
 
-![Terraform Validate](https://github.com/goci-io/aws-atlantis-helm/workflows/Terraform%20Validate/badge.svg)
+![terraform](https://github.com/goci-io/aws-atlantis-helm/workflows/terraform/badge.svg?branch=master)
 
 This module deploys [Atlantis](https://www.runatlantis.io/) as helm release, provides a server side workflow definition and optionally creates required [cert-manager](https://github.com/goci-io/aws-cert-manager-helm) `Certificate` resource to use for HTTPS. When you enable the cert-manager resources we automatically setup atlantis to use an https server (end to end SSL).
 
