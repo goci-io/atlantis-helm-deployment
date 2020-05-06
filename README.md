@@ -63,19 +63,51 @@ projects:
   workspace: staging
   workflow: default-aws
   autoplan:
-    when_modified: ["modules/cloudtrail/*.tf", "*.tf*"]
+    when_modified: ["*.tf", "*.tf*"]
     enabled: true
 - dir: modules/cloudtrail
   name: cloudtrail
   workspace: prod
   workflow: default-aws
   autoplan:
-    when_modified: ["modules/cloudtrail/*.tf", "*.tf*"]
+    when_modified: ["*.tf", "*.tf*"]
     enabled: true
 ...
 ```
 
 The project name will be used to generate the S3 key for the state file. It follows the convention of `${PROJECT_NAME}/terraform.tfstate`
+
+#### `parameterized-aws` 
+
+Utilizes `.tfvars` files for each workspace to produce a plan.
+Example project structure:
+
+```
+infrastructure/
+  main.tf
+  prod.tfvars
+  staging.tfvars
+```
+
+Atlantis example repo config:
+
+```yaml
+version: 3
+projects:
+- dir: infrastructure
+  name: infrastructure
+  workspace: staging
+  workflow: parameterized-aws
+  autoplan:
+    when_modified: ["*.tf", "*.tf*"]
+    enabled: true
+- dir: infrastructure
+  name: infrastructure
+  workspace: prod
+  workflow: parameterized-aws
+  autoplan:
+    enabled: false
+```
 
 To setup a full github repository with atlantis (eg. if you provision initial build infrastructure seperatly) you can use our [github-repository](https://github.com/goci-io/github-repository) module.
 

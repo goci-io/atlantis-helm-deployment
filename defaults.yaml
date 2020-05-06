@@ -60,9 +60,6 @@ repoConfig: |
     default-aws:
       plan:
         steps:
-        - env:
-            name: TF_VAR_stage
-            command: 'echo $${WORKSPACE}'
 %{ for key, val in merge(terraform_env, atlantis_env_expose) ~}
         - env:
             name: TF_VAR_${key}
@@ -70,9 +67,23 @@ repoConfig: |
 %{ endfor ~}
         - env:
             name: TF_CLI_ARGS_init
-            command: 'echo "-backend-config=bucket=$${TF_BUCKET} -backend-config=encrypt=true -backend-config=region=$${AWS_DEFAULT_REGION} -no-color"'
+            command: 'echo "-backend-config=bucket=$${TF_BUCKET} -backend-config=encrypt=true -backend-config=region=$${AWS_DEFAULT_REGION}"'
         - run: terraform init -backend-config=key=$${PROJECT_NAME}/terraform.tfstate
         - plan
+    parameterized-aws:
+      plan:
+        steps:
+%{ for key, val in merge(terraform_env, atlantis_env_expose) ~}
+        - env:
+            name: TF_VAR_${key}
+            command: 'echo $${${val}}'
+%{ endfor ~}
+        - env:
+            name: TF_CLI_ARGS_init
+            command: 'echo "-backend-config=bucket=$${TF_BUCKET} -backend-config=encrypt=true -backend-config=region=$${AWS_DEFAULT_REGION}"'
+        - run: terraform init -backend-config=key=$${PROJECT_NAME}/terraform.tfstate
+        - plan:
+            extra_args: ["-var-file", "$${WORKSPACE}.tfvars"]
     default:
       plan:
         steps:
