@@ -67,7 +67,7 @@ repoConfig: |
 %{ endfor ~}
         - env:
             name: TF_CLI_ARGS_init
-            command: 'echo "-backend-config=bucket=$${TF_BUCKET} -backend-config=encrypt=true -backend-config=region=$${AWS_DEFAULT_REGION}"'
+            command: 'echo "-backend-config=bucket=$${TF_BUCKET} -backend-config=encrypt=true -backend-config=region=$${AWS_DEFAULT_REGION} -no-color"'
         - run: terraform init -backend-config=key=$${PROJECT_NAME}/terraform.tfstate
         - plan
     parameterized-aws:
@@ -80,7 +80,7 @@ repoConfig: |
 %{ endfor ~}
         - env:
             name: TF_CLI_ARGS_init
-            command: 'echo "-backend-config=bucket=$${TF_BUCKET} -backend-config=encrypt=true -backend-config=region=$${AWS_DEFAULT_REGION}"'
+            command: 'echo "-backend-config=bucket=$${TF_BUCKET} -backend-config=encrypt=true -backend-config=region=$${AWS_DEFAULT_REGION} -no-color"'
         - run: terraform init -backend-config=key=$${PROJECT_NAME}/terraform.tfstate
         - plan:
             extra_args: ["-var-file", "$${WORKSPACE}.tfvars"]
