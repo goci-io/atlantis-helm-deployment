@@ -3,6 +3,7 @@ terraform {
 
   required_providers {
     helm       = "~> 1.0"
+    random     = "~> 2.2"
     kubernetes = "~> 1.11"
   }
 }
