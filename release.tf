@@ -1,8 +1,3 @@
-data "helm_repository" "stable" {
-  name = "stable"
-  url  = "https://kubernetes-charts.storage.googleapis.com"
-}
-
 locals {
   default_nginx_annotations = {
     "nginx.ingress.kubernetes.io/ssl-passthrough"    = "true",
@@ -23,7 +18,7 @@ resource "helm_release" "atlantis" {
   name          = local.release_name
   namespace     = var.k8s_namespace
   version       = var.helm_release_version
-  repository    = data.helm_repository.stable.metadata[0].name
+  repository    = "https://kubernetes-charts.storage.googleapis.com"
   chart         = "atlantis"
   recreate_pods = true
   wait          = true
