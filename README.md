@@ -6,8 +6,7 @@
 
 This module deploys [Atlantis](https://www.runatlantis.io/) as helm release, provides a server side workflow definition and optionally creates required [cert-manager](https://github.com/goci-io/aws-cert-manager-helm) `Certificate` resource to use for HTTPS. When you enable the cert-manager resources we automatically setup atlantis to use an https server (end to end SSL).
 
-We extend the [runatlantis/atlantis](https://hub.docker.com/r/runatlantis/atlantis/) image by adding [`tfenv`](https://github.com/cloudposse/tfenv). 
-By adding `tfenv` into the process you can access all environment variables as terraform variables.
+We extend the [runatlantis/atlantis](https://hub.docker.com/r/runatlantis/atlantis/) image by the AWS CLI and kubectl.
 The docker image is pushed to [gocidocker](https://hub.docker.com/u/gocidocker) on docker using [hub.docker.com]'s autobuild configuration.
 Once a new release is created with a tag following the convention of `<major>.<minor>[.<patch>]-atlantis` the docker image build will be triggered
 
@@ -15,7 +14,7 @@ Once a new release is created with a tag following the convention of `<major>.<m
 
 ### Usage
 
-For the latest version you can check the [releases](https://github.com/goci-io/atlantis-helm-deployment/releases) page. Use releases without the `-atlantis` suffix.
+For the latest version you can check the [releases](https://github.com/goci-io/atlantis-helm-deployment/releases) page. Use releases **without** the `-atlantis` suffix.
 
 ```hcl
 module "atlantis" {
