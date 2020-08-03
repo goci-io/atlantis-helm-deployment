@@ -1,6 +1,6 @@
 variable "organization" {
   type        = string
-  description = "The version control hosting organization (eg: goci-io)"
+  description = "The version control organization owner (eg: goci-io)"
 }
 
 variable "repositories" {
@@ -81,6 +81,42 @@ variable "apply_requirements" {
   type        = list(string)
   default     = ["approved", "mergeable"]
   description = "Requirements before running terraform apply"
+}
+
+variable "create_server_role" {
+  type        = bool
+  default     = false
+  description = "Creates an IAM Role for the Atlantis Server"
+}
+
+variable "server_role_arn" {
+  type        = string
+  default     = ""
+  description = "ARN of an existing Role to use for the Atlantis Server"
+}
+
+variable "server_role_external_id" {
+  type        = string
+  default     = ""
+  description = "External-ID to be used to assume the role specified in server_role_arn"
+}
+
+variable "server_role_policy_statements" {
+  type        = list(any)
+  default     = []
+  description = "Additional statements of effect, actions and ressources to grant Atlantis Server"
+}
+
+variable "server_role_trusted_arns" {
+  type        = list(string)
+  default     = []
+  description = "AWS Resource ARNs allowed to assume the created Role (takes effect when create_server_role is set to true)"
+}
+
+variable "configure_kiam" {
+  type        = bool
+  default     = false
+  description = "Adds Kiam Annotations to the Pod using the Role created or specified in server_role_arn"
 }
 
 variable "lambda_encryption_function" {
