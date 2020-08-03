@@ -7,8 +7,7 @@
 This module deploys [Atlantis](https://www.runatlantis.io/) as helm release, provides a server side workflow definition and optionally creates required [cert-manager](https://github.com/goci-io/aws-cert-manager-helm) `Certificate` resource to use for HTTPS. When you enable the cert-manager resources we automatically setup atlantis to use an https server (end to end SSL).
 
 We extend the [runatlantis/atlantis](https://hub.docker.com/r/runatlantis/atlantis/) image by the AWS CLI and kubectl.
-The docker image is pushed to [gocidocker](https://hub.docker.com/u/gocidocker) on docker using [hub.docker.com]'s autobuild configuration.
-Once a new release is created with a tag following the convention of `<major>.<minor>[.<patch>]-atlantis` the docker image build will be triggered
+The docker image is pushed to [gocidocker](https://hub.docker.com/u/gocidocker) on docker using [hub.docker.com]'s autobuild configuration. Once a new release is created with a tag following the convention of `<major>.<minor>[.<patch>]-atlantis` the docker image build will be triggered
 
 [![](https://images.microbadger.com/badges/version/gocidocker/atlantis.svg)](https://microbadger.com/images/gocidocker/atlantis "Get your own version badge on microbadger.com")
 
@@ -112,7 +111,6 @@ To setup a full github repository with atlantis (eg. if you provision initial bu
 
 For the AWS workflow the following environment variables are required:  
 - `AWS_DEFAULT_REGION`  
-- `TF_BUCKET`  
 
 ### Configuration
 
@@ -134,8 +132,13 @@ For the AWS workflow the following environment variables are required:
 | helm_values_root | Path to the directory containing values.yaml for helm to overwrite any defaults | `.` |
 | apply_requirements | Requirements any pull request needs to fulfil before planning terraform diff | `["mergeable", "approved"]` |
 | enable_tls | Configures the TLS configuration options for the ingress pointing to secret called <name>-tls. Automatically enabled when configure_cert_manager is set to true | `false` |
-| terraform_environment_variables | Map of variables to add to the terraform env (`TF_VAR_`) | `{}` |
-| exposed_atlantis_environment_variables | Variables to expose to Terraform environment from Atlantis pod environment itself (`TF_VAR_`) | `{}` |
+| expose_atlantis_environment_variables | Variables to expose to Terraform environment from Atlantis pod environment itself (`TF_VAR_`) | `{}` |
+| create_server_role | Creates an IAM Role for the Atlantis Server | `false` |
+| server_role_arn | ARN of an existing Role to use for the Atlantis Server | `""` |
+| server_role_external_id | External-ID to be used to assume the role specified in server_role_arn | `""` |
+| server_role_policy_statements | Additional statements of effect, actions and ressources to grant Atlantis Server | `[]` |
+| server_role_trusted_arns | AWS Resource ARNs allowed to assume the created Role (takes effect when create_server_role is set to true) | `[]` |
+| configure_kiam | Adds Kiam Annotations to the Pod using the Role created or specified in server_role_arn | `false` |
 | configure_cert_manager | Configures cert-manager certificate for the ingress | `false` |
 | cert_manager_issuer_name | The Issuer to use to create the certificate with cert-manager | `""` |
 | cert_manager_cluster_issuer_name | The ClusterIssuer to use to create the certificate with cert-manager. Conflicts with cert_manager_issuer_name | `""` | 

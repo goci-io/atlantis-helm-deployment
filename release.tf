@@ -12,6 +12,7 @@ locals {
 
   enable_tls          = var.configure_cert_manager || var.enable_tls
   ingress_annotations = merge({}, local.cert_manager_annotations, local.ingress_class_annotations, local.nginx_ingress_annotations)
+  pod_annotations     = merge({}, local.kiam_annotations, var.pod_annotations)
 }
 
 resource "helm_release" "atlantis" {
@@ -37,7 +38,7 @@ resource "helm_release" "atlantis" {
       tls_secret          = local.enable_tls ? format("%s-tls", local.release_name) : ""
       ingress_annotations = local.ingress_annotations
       atlantis_url        = local.atlantis_url
-      pod_annotations     = var.pod_annotations
+      pod_annotations     = local.pod_annotations
       apply_requirements  = join(",", var.apply_requirements)
     }),
     file("${var.helm_values_root}/values.yaml"),
