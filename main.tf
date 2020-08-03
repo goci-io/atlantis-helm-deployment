@@ -9,7 +9,8 @@ locals {
   atlantis_url = format("%s.%s", local.release_name, var.cluster_fqdn)
 
   environment_variables = merge({
-    namespace = var.namespace
-    tf_bucket = module.state_backend.s3_bucket_id
+    namespace          = var.namespace
+    aws_default_region = var.aws_region
+    tf_bucket          = module.state_backend.s3_bucket_id
   }, var.environment_variables)
 }

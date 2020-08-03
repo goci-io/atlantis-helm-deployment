@@ -28,11 +28,6 @@ module "atlantis" {
     "tools.goci.io",
     # ...
   ]
-
-  environment_variables = {
-    aws_default_region = "eu-central-1"
-    tf_bucket          = "my-terraform-state-bucket-name"
-  }
 }
 ```
 
@@ -40,7 +35,7 @@ module "atlantis" {
 
 #### `default` 
 
-This is the default workflow if none is set. It simply uses `tfenv` and sets `TF_VAR_stage` to the current `$WORKSPACE`. On plan it initializes the workspace and creates the plan.
+This is the default workflow if none is set and simplify executes terraform init, plan and apply.
 
 #### `validate`
 
@@ -107,10 +102,7 @@ projects:
     enabled: false
 ```
 
-To setup a full github repository with atlantis (eg. if you provision initial build infrastructure seperatly) you can use our [github-repository](https://github.com/goci-io/github-repository) module.
-
-For the AWS workflow the following environment variables are required:  
-- `AWS_DEFAULT_REGION`  
+To setup a full github repository with atlantis (eg. if you provision initial build infrastructure seperatly) you can use our [goci-aws-atlantis-stack](https://github.com/goci-io/goci-aws-atlantis-stack) module.
 
 ### Configuration
 
