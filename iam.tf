@@ -15,11 +15,8 @@ locals {
 
   policy_statements = concat(local.bucket_access, var.server_role_policy_statements)
 
-  external_id_annotation = module.iam_role.external_id != "" || var.server_role_external_id != "" ?
-    coalesce(module.iam_role.external_id, var.server_role_external_id) : ""
-
-  role_annotation = module.iam_role.role_arn != "" || var.server_role_arn != "" ?
-    coalesce(module.iam_role.role_arn, var.server_role_arn) : ""
+  role_annotation        = module.iam_role.role_arn != "" || var.server_role_arn != "" ? coalesce(module.iam_role.role_arn, var.server_role_arn) : ""
+  external_id_annotation = module.iam_role.external_id != "" || var.server_role_external_id != "" ? coalesce(module.iam_role.external_id, var.server_role_external_id) : ""
 
   kiam_annotations = local.role_annotation == "" ? {} : {
     "iam.amazonaws.com/role" = coalesce(module.iam_role.role_arn, var.server_role_arn)
