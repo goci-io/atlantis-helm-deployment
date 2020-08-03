@@ -1,7 +1,7 @@
 locals {
   bucket_access = [
     {
-      actions   = ["s3:GetObject", "s3:PutObject", "s3:ListBucket"]
+      actions = ["s3:GetObject", "s3:PutObject", "s3:ListBucket"]
       resources = [
         module.state_backend.s3_bucket_arn,
         format("%s/*", module.state_backend.s3_bucket_arn),
@@ -19,7 +19,7 @@ locals {
   external_id_annotation = module.iam_role.external_id != "" || var.server_role_external_id != "" ? coalesce(module.iam_role.external_id, var.server_role_external_id) : ""
 
   kiam_annotations = local.role_annotation == "" ? {} : {
-    "iam.amazonaws.com/role" = coalesce(module.iam_role.role_arn, var.server_role_arn)
+    "iam.amazonaws.com/role"        = coalesce(module.iam_role.role_arn, var.server_role_arn)
     "iam.amazonaws.com/external-id" = local.external_id_annotation
   }
 }
