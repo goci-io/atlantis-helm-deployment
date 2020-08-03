@@ -1,4 +1,3 @@
-
 locals {
   host_attribute = {
     github    = "hostname"
@@ -11,5 +10,6 @@ locals {
 
   environment_variables = merge({
     namespace = var.namespace
+    tf_bucket = module.state_backend.s3_bucket_id
   }, var.environment_variables)
 }
