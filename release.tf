@@ -49,8 +49,13 @@ resource "helm_release" "atlantis" {
     value = var.vc_host
   }
 
+  set {
+    name  = "vcsSecretName"
+    value = kubernetes_secret.git_credentials.metadata.0.name
+  }
+
   dynamic "set_sensitive" {
-    for_each = ["user", "token", "secret"]
+    for_each = ["user"]
 
     content {
       name  = format("%s.%s", var.vc_type, set_sensitive.value)
