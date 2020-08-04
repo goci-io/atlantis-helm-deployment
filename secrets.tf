@@ -45,3 +45,15 @@ resource "kubernetes_secret" "custom_secrets" {
     namespace = var.k8s_namespace
   }
 }
+
+resource "kubernetes_secret" "git_credentials" {
+  metadata {
+    name      = format("%s-git", local.release_name)
+    namespace = var.k8s_namespace
+  }
+
+  data = {
+    "${var.vc_type}_secret" = local.sensitives.secret
+    "${var.vc_type}_token"  = local.sensitives.token
+  }
+}
