@@ -41,14 +41,14 @@ resource "kubernetes_secret" "custom_secrets" {
   data  = var.terraform_environment_variables
 
   metadata {
-    name      = format("%s-custom", local.release_name)
+    name      = "${local.release_name}-custom"
     namespace = var.k8s_namespace
   }
 }
 
 resource "kubernetes_secret" "git_credentials" {
   metadata {
-    name      = format("%s-git", local.release_name)
+    name      = "${local.release_name}-git"
     namespace = var.k8s_namespace
   }
 
