@@ -52,7 +52,7 @@ resource "helm_release" "atlantis" {
 
   set {
     name  = "vcsSecretName"
-    value = kubernetes_secret.git_credentials.metadata.0.name
+    value = kubernetes_secret.vcs_secret.metadata.0.name
   }
 
   dynamic "set_sensitive" {
