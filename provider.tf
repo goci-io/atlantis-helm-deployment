@@ -5,6 +5,5 @@ terraform {
     aws        = "~> 2.50"
     helm       = "~> 1.0"
     random     = "~> 2.2"
-    kubernetes = "~> 1.11"
   }
 }
