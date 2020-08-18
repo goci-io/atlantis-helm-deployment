@@ -46,7 +46,7 @@ resource "kubernetes_secret" "custom_secrets" {
   }
 }
 
-resource "kubernetes_secret" "git_credentials" {
+resource "kubernetes_secret" "vcs_secret" {
   metadata {
     name      = "${local.release_name}-git"
     namespace = var.k8s_namespace
