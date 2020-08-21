@@ -45,6 +45,10 @@ environmentSecrets:
 %{ endfor ~}
 %{ endif ~}
 
+environment:
+  ATLANTIS_HIDE_PREV_PLAN_COMMENTS: "true"
+  TF_PLUGIN_CACHE_DIR: /atlantis-data/.terraform.d/plugin-cache
+
 repoConfig: |
   ---
   repos:
