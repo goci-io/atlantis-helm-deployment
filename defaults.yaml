@@ -1,11 +1,11 @@
 dataStorage: 4Gi
-defaultTFVersion: 0.12.29
+defaultTFVersion: 0.13.1
 orgWhitelist: ${vc_host}/${organization}/*
 atlantisUrl: https://${atlantis_url}
 
 image:
   repository: gocidocker/atlantis
-  tag: 0.2.0
+  tag: 0.3.0
 
 livenessProbe:
   periodSeconds: 30
