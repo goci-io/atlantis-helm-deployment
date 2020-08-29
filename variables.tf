@@ -50,7 +50,7 @@ variable "pod_annotations" {
 
 variable "helm_release_version" {
   type        = string
-  default     = "3.11.1"
+  default     = "3.12.2"
   description = "Version of the helm release to deploy"
 }
 
