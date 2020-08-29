@@ -25,7 +25,7 @@ locals {
 }
 
 module "iam_role" {
-  source            = "git::https://github.com/goci-io/aws-iam-assumable-role.git?ref=tags/0.1.1"
+  source            = "git::https://github.com/goci-io/aws-iam-assumable-role.git?ref=tags/0.3.0"
   enabled           = var.create_server_role
   namespace         = var.namespace
   stage             = var.stage
@@ -33,4 +33,5 @@ module "iam_role" {
   name              = local.release_name
   policy_statements = local.policy_statements
   trusted_iam_arns  = var.server_role_trusted_arns
+  policy_json       = var.server_role_policy_json
 }

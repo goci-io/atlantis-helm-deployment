@@ -129,6 +129,7 @@ To setup a full github repository with atlantis (eg. if you provision initial bu
 | server_role_arn | ARN of an existing Role to use for the Atlantis Server | `""` |
 | server_role_external_id | External-ID to be used to assume the role specified in server_role_arn | `""` |
 | server_role_policy_statements | Additional statements of effect, actions and ressources to grant Atlantis Server | `[]` |
+| server_role_policy_json | Additional plain JSON Policy to attach to the Server Role. Use the Result of aws_iam_policy_document.json | `""` |
 | server_role_trusted_arns | AWS Resource ARNs allowed to assume the created Role (takes effect when create_server_role is set to true) | `[]` |
 | configure_kiam | Adds Kiam Annotations to the Pod using the Role created or specified in server_role_arn | `false` |
 | configure_cert_manager | Configures cert-manager certificate for the ingress | `false` |

@@ -50,7 +50,7 @@ variable "pod_annotations" {
 
 variable "helm_release_version" {
   type        = string
-  default     = "3.11.1"
+  default     = "3.12.2"
   description = "Version of the helm release to deploy"
 }
 
@@ -105,6 +105,12 @@ variable "server_role_policy_statements" {
   type        = list(any)
   default     = []
   description = "Additional statements of effect, actions and ressources to grant Atlantis Server"
+}
+
+variable "server_role_policy_json" {
+  type        = string
+  default     = ""
+  description = "Additional plain JSON Policy to attach to the Server Role. Use the Result of aws_iam_policy_document.json"
 }
 
 variable "server_role_trusted_arns" {
