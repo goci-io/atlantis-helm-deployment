@@ -119,6 +119,12 @@ variable "server_role_trusted_arns" {
   description = "AWS Resource ARNs allowed to assume the created Role (takes effect when create_server_role is set to true)"
 }
 
+variable "server_role_name_override" {
+  type        = string
+  default     = ""
+  description = "Overrides the IAM role name to use for Atlantis"
+}
+
 variable "configure_kiam" {
   type        = bool
   default     = false
